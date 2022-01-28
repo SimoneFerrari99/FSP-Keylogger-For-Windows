@@ -12,7 +12,7 @@ while not connected:
     print("> Connessione... ")  
 
     try:  
-        clientSocket.connect(("127.0.0.1",9090))
+        clientSocket.connect(("10.0.0.2",9090))
         connected = True  
         print( "> Connessione eseguita" )
 

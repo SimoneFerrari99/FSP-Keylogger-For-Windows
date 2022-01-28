@@ -12,7 +12,7 @@ while not connected:
     print("> Connessione... ")  
 
     try:  
-        clientSocket.connect(("10.0.0.2",9090))
+        clientSocket.connect(("10.0.2.2",9090))
         connected = True  
         print( "> Connessione eseguita" )
 
@@ -32,4 +32,4 @@ while not connected:
 
     except socket.error:  
         print("  >> Connessione fallita")
-        time.sleep(30)  
+        time.sleep(30)

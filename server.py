@@ -1,14 +1,13 @@
 # Server Program
-import socket
-import logging
-from datetime import date
+import socket # Libreria per la creazione e gestione di socket
+import logging  # Libreria per loggare informazioni su documenti
+from datetime import date # Libreria per gestire le date
+from Crypto.Cipher import AES # Algoritmo di crittografia a chiave simmetrica
 
-from Crypto.Cipher import AES
-
-def do_decrypt(ciphertext: str):
-    obj2 = AES.new(b'Fm!t%68Hava!wq&)', AES.MODE_CFB, b'Fh78&rsV2!894R6$')
-    message = obj2.decrypt(ciphertext)
-    return message.decode()
+def decryptData(textToDecrypt: str):
+    aes = AES.new(b'Fm!t%68Hava!wq&)', AES.MODE_CFB, b'Fh78&rsV2!894R6$')
+    text = aes.decrypt(textToDecrypt)
+    return text.decode()
 
 
 socketOpened = False
@@ -34,10 +33,13 @@ while not socketOpened:
     counter = 0
     while(socketOpened):
         try:
-            dataFromClient = do_decrypt(clientConnected.recv(16)).replace('\'', '')
-            if(dataFromClient != ''):
+            textEncrypted = clientConnected.recv(16)
+            textDecrypted = decryptData(textEncrypted).replace('\'', '')
+            print("  |> Ricevo (%s > \'%s\')" % (textEncrypted, textDecrypted))
+
+            if(textDecrypted != ''):
                 counter = 0
-                logging.info(dataFromClient)
+                logging.info(textDecrypted)
             else:
                 counter += 1
                 if counter == 100:

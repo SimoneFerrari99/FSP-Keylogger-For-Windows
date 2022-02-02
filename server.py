@@ -3,6 +3,14 @@ import socket
 import logging
 from datetime import date
 
+from Crypto.Cipher import AES
+
+def do_decrypt(ciphertext: str):
+    obj2 = AES.new(b'Fm!t%68Hava!wq&)', AES.MODE_CFB, b'Fh78&rsV2!894R6$')
+    message = obj2.decrypt(ciphertext)
+    return message.decode()
+
+
 socketOpened = False
 while not socketOpened:
     # Crea il socket "stream based" basato sul protocollo TCP ed indirizzi IPv4
@@ -26,7 +34,7 @@ while not socketOpened:
     counter = 0
     while(socketOpened):
         try:
-            dataFromClient = clientConnected.recv(16).decode().replace('\'', '')
+            dataFromClient = do_decrypt(clientConnected.recv(16)).replace('\'', '')
             if(dataFromClient != ''):
                 counter = 0
                 logging.info(dataFromClient)
@@ -39,6 +47,7 @@ while not socketOpened:
                     socketOpened = False
 
         except socket.error:
+            logging.info("# Client disconnesso #")
             print("     >>> Client disconnesso.")
             serverSocket.close()
             socketOpened = False

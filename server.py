@@ -4,6 +4,7 @@ import logging  # Libreria per loggare informazioni su documenti
 from datetime import date # Libreria per gestire le date
 from Crypto.Cipher import AES # Algoritmo di crittografia a chiave simmetrica
 
+
 def decryptData(textToDecrypt: str):
     aes = AES.new(b'Fm!t%68Hava!wq&)', AES.MODE_CFB, b'Fh78&rsV2!894R6$')
     text = aes.decrypt(textToDecrypt)

